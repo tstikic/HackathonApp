@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#93ccce"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="210dp"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/coverImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/cover" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="90dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="146dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="casual"
+            tools:text="10"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <ImageButton
+            android:id="@+id/buttonFirst"
+            android:layout_width="349dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/round_outline"
+            tools:backgroundTint="@color/btn_correct_state" />
+
+        <TextView
+            android:id="@+id/answer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="201dp"
+            android:layout_marginTop="17dp"
+            android:fontFamily="casual"
+            tools:text="2"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+
+        <ImageButton
+            android:id="@+id/buttonSecond"
+            android:layout_width="349dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/round_outline"
+            tools:backgroundTint="@color/btn_wrong_state"/>
+
+        <TextView
+            android:id="@+id/answer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="200dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="casual"
+            tools:text="4"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/buttonThird"
+            android:layout_width="349dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_outline"
+            tools:backgroundTint="@color/btn_wrong_state"/>
+
+        <TextView
+            android:id="@+id/answer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="201dp"
+            android:layout_marginTop="36dp"
+            android:fontFamily="casual"
+            tools:text="1"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="20dp"
+        android:background="#ffffff"/>
+
+
+</LinearLayout>
