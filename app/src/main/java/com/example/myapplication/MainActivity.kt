@@ -5,7 +5,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.animation.Animator
+
+import android.animation.AnimatorListenerAdapter
+
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
+import android.content.res.ColorStateList
+import android.graphics.Color
+
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -61,19 +72,48 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.screen_quiz)
 
-        questionTextView = findViewById(R.id.questionTextView)
+        //questionTextView = findViewById(R.id.questionTextView)
         buttonOne = findViewById(R.id.button)
         buttonTwo = findViewById(R.id.button2)
         buttonThree = findViewById(R.id.button3)
         buttonFour = findViewById(R.id.button4)
         result = findViewById(R.id.textViewResult)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+
 
         fillQuestionFields()
         for (i in 0 until 4) {
             getButton(i).setOnClickListener(onAnswerSelected(i))
         }
+
+
+
+        progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+
+
+        val animator = ValueAnimator.ofInt(0, progressBar.max)
+        animator.duration = 10000
+        animator.addUpdateListener { animation ->
+            progressBar.progress = (animation.animatedValue as Int)!!
+        }
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                if (!buttonOne.isSelected && !buttonTwo.isSelected && !buttonThree.isSelected) {
+
+                    startActivity(Intent(this@MainActivity, SecondActivity::class.java))
+                }
+            }
+        })
+        animator.start()
+
+        handler = Handler()
+
+
+
+
     }
 
     private fun onAnswerSelected(index: Int): View.OnClickListener = View.OnClickListener {

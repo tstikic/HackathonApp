@@ -12,10 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="273dp"
+        android:layout_marginTop="368dp"
         tools:text="3"
         android:textColor="@color/white"
-        android:backgroundTint="@drawable/btn_wrong_state"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +26,6 @@
         android:layout_marginEnd="29dp"
         tools:text="2"
         android:textColor="@color/white"
-        android:backgroundTint="@drawable/btn_correct_state"
         app:layout_constraintBaseline_toBaselineOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button" />
@@ -38,10 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         tools:text="4"
         android:textColor="@color/white"
-        android:backgroundTint="@drawable/btn_wrong_state"
         app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -50,25 +47,13 @@
         android:id="@+id/button4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="224dp"
         android:layout_marginEnd="29dp"
         tools:text="1"
         android:textColor="@color/white"
-        android:backgroundTint="@drawable/btn_wrong_state"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button3" />
-
-    <TextView
-        android:id="@+id/questionTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        tools:text="10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
 
     <TextView
         android:id="@+id/textViewResult"
@@ -80,5 +65,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.783" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="10"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.134" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

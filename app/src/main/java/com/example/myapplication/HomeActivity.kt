@@ -3,20 +3,21 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 
-class IntroActivity : AppCompatActivity() {
-    lateinit var handler: Handler
+class HomeActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.intro_activity)
+        setContentView(R.layout.new_activity)
 
-        handler = Handler()
-        handler.postDelayed({
+        val buttonJunior = findViewById<ImageButton>(R.id.playBtn)
 
+        buttonJunior.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 1000)
+        }
     }
 }

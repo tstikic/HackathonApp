@@ -4,9 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/btn_wrong_state.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/btn_correct_state.xml" value="0.109375" />
+        <entry key="app/src/main/res/drawable/btn_play_clicked.xml" value="0.1984375" />
         <entry key="app/src/main/res/drawable/btn_state.xml" value="0.20625" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1325145187415932" />
-        <entry key="app/src/main/res/layout/intro_activity.xml" value="0.165" />
+        <entry key="app/src/main/res/drawable/round_outline.xml" value="0.20625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fade_in.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/home_activity.xml" value="0.1468132945084067" />
+        <entry key="app/src/main/res/layout/intro_activity.xml" value="0.4587301587301587" />
+        <entry key="app/src/main/res/layout/new_activity.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/new_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/screen_quiz.xml" value="0.18319974301085148" />
+        <entry key="app/src/main/res/layout/screen_quiz_finished.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/splash_screen.xml" value="0.15715579710144928" />
         <entry key="app/src/main/res/layout/splash_screen_layout.xml" value="0.10169019848335968" />
       </map>
     </option>
