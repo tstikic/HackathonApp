@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.animation.Animator
@@ -13,107 +12,107 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 
 import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.widget.ImageButton
+import androidx.annotation.IntRange
 
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    lateinit var handler: Handler
+
+    companion object {
+        const val NUMBER_OF_ANSWERS = 3
+    }
 
     private val data = listOf(
         Question(
             0b10,
-            1, 3, 4
+            1, 3
         ),
         Question(
             0b110,
-            3, 9, 5
+            3, 9
         ),
         Question(
             0b1001,
-            5, 3, 11
+            5, 11
         ),
         Question(
             0b1011,
-            17, 15, 13
+            17, 15
         ),
         Question(
             0b10101,
-            11, 19, 13
+            11, 19
         ),
         Question(
             0b11001,
-            23, 21, 22
+            23, 21
         ),
         Question(
             0b100101,
-            43, 53, 47
+            43, 53
         ),
         Question(
             0b100100,
-            34, 32, 30
+            34, 32
         )
     )
 
-    var currentQuestion = 0
+    private var currentQuestion = 0
 
-    var correctAnswerIndex = 0
+    private var correctAnswerIndex = 0
 
     private lateinit var questionTextView: TextView
+    private lateinit var buttonFirst: ImageButton
+    private lateinit var buttonSecond: ImageButton
+    private lateinit var buttonThird: ImageButton
+    private lateinit var textFirst: TextView
+    private lateinit var textSecond: TextView
+    private lateinit var textThird: TextView
 
-    private lateinit var buttonOne: Button
-    private lateinit var buttonTwo: Button
-    private lateinit var buttonThree: Button
-    private lateinit var buttonFour: Button
-
-    private lateinit var result: TextView
+    private lateinit var animator: ValueAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.screen_quiz)
 
-        //questionTextView = findViewById(R.id.questionTextView)
-        buttonOne = findViewById(R.id.button)
-        buttonTwo = findViewById(R.id.button2)
-        buttonThree = findViewById(R.id.button3)
-        buttonFour = findViewById(R.id.button4)
-        result = findViewById(R.id.textViewResult)
+        questionTextView = findViewById(R.id.question)
+        buttonFirst = findViewById(R.id.buttonFirst)
+        buttonSecond = findViewById(R.id.buttonSecond)
+        buttonThird = findViewById(R.id.buttonThird)
+        textFirst = findViewById(R.id.answer1)
+        textSecond = findViewById(R.id.answer2)
+        textThird = findViewById(R.id.answer3)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
+        progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
 
-        fillQuestionFields()
-        for (i in 0 until 4) {
-            getButton(i).setOnClickListener(onAnswerSelected(i))
-        }
-
-
-
-        progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
-
-
-        val animator = ValueAnimator.ofInt(0, progressBar.max)
+        animator = ValueAnimator.ofInt(0, progressBar.max)
         animator.duration = 10000
         animator.addUpdateListener { animation ->
-            progressBar.progress = (animation.animatedValue as Int)!!
+            progressBar.progress = animation.animatedValue as Int
         }
         animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
-                if (!buttonOne.isSelected && !buttonTwo.isSelected && !buttonThree.isSelected) {
-
-                    startActivity(Intent(this@MainActivity, SecondActivity::class.java))
+                if (!buttonFirst.isSelected && !buttonSecond.isSelected && !buttonThird.isSelected) {
+                    gameOver()
                 }
             }
         })
-        animator.start()
 
-        handler = Handler()
+        for (i in 0 until NUMBER_OF_ANSWERS) {
+            getButton(i).setOnClickListener(onAnswerSelected(i))
+        }
+        newQuestion()
+    }
 
-
-
-
+    private fun gameOver() {
+        cancelProgressBar()
+        disableButtons()
+        startActivity(Intent(this@MainActivity, PointsActivity::class.java))
     }
 
     private fun onAnswerSelected(index: Int): View.OnClickListener = View.OnClickListener {
@@ -124,22 +123,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onWrongAnswer() {
-        result.text = "Wrong answer"
-        for (i in 1 until 4) {
+    private fun disableButtons() {
+        for (i in 1 until NUMBER_OF_ANSWERS) {
             getButton(i).isClickable = false
         }
+    }
+
+    private fun enableButtons() {
+        for (i in 1 until NUMBER_OF_ANSWERS) {
+            getButton(i).isClickable = true
+        }
+    }
+
+    private fun onWrongAnswer() {
+        gameOver()
+    }
+
+    private fun cancelProgressBar() {
+        animator.cancel()
     }
 
     private fun isCorrectAnswer(answeredIndex: Int) = answeredIndex == correctAnswerIndex
 
     private fun nextQuestion() {
         if (++currentQuestion < data.size) {
-            fillQuestionFields()
+            newQuestion()
         }
     }
 
-    private fun fillQuestionFields() {
+    private fun newQuestion() {
+        disableButtons()
+
         val question = data[currentQuestion]
 
         val shuffledAnswers = question.answers.shuffled()
@@ -147,17 +161,34 @@ class MainActivity : AppCompatActivity() {
 
         questionTextView.text = question.binaryNumber.toString(2)
 
-        for (i in 0 until 4) {
-            getButton(i).text = shuffledAnswers[i].toString()
+        for (i in 0 until NUMBER_OF_ANSWERS) {
+            with(getButton(i)) {
+                getTextView(i).text = shuffledAnswers[i].toString()
+                backgroundTintList = if (i == correctAnswerIndex) {
+                    context.getColorStateList(R.color.btn_correct_state)
+                } else {
+                    context.getColorStateList(R.color.btn_wrong_state)
+                }
+            }
         }
+
+        enableButtons()
+
+        animator.start()
     }
 
-    private fun getButton(index: Int) = when (index) {
-        0 -> buttonOne
-        1 -> buttonTwo
-        2 -> buttonThree
-        3 -> buttonFour
-        else -> throw IllegalArgumentException()
+    private fun getButton(@IntRange(from = 0, to = 2) index: Int) = when (index) {
+        0 -> buttonFirst
+        1 -> buttonSecond
+        2 -> buttonThird
+        else -> throw IllegalArgumentException("i = $index")
+    }
+
+    private fun getTextView(@IntRange(from = 0, to = 2) index: Int) = when (index) {
+        0 -> textFirst
+        1 -> textSecond
+        2 -> textThird
+        else -> throw IllegalArgumentException("i = $index")
     }
 }
 
@@ -165,10 +196,9 @@ data class Question(
     val binaryNumber: Int,
     val answer2: Int,
     val answer3: Int,
-    val answer4: Int,
 ) {
     val correctAnswer = Integer.parseInt(binaryNumber.toString(2), 2)
 
     val answers
-        get() = listOf(correctAnswer, answer2, answer3, answer4)
+        get() = listOf(correctAnswer, answer2, answer3)
 }
