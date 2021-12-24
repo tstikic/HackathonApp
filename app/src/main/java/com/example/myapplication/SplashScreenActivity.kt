@@ -12,6 +12,7 @@ class SplashScreenActivity : AppCompatActivity() {
     lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        colorStatusBar()
         setContentView(R.layout.splash_screen)
         val imgView = findViewById<ImageView>(R.id.logo)
 
@@ -23,6 +24,6 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this, IntroActivity::class.java)
             startActivity(intent)
             finish()
-        }, 4000)
+        }, 2500)
     }
 }

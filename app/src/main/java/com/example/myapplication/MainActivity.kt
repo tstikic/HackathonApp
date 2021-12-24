@@ -12,52 +12,28 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatActivity
 
+
 class MainActivity : AppCompatActivity() {
 
     companion object {
+        const val DIFFICULTY_BUNDLE_KEY = "DIFFICULTY_BUNDLE_KEY"
         const val NUMBER_OF_ANSWERS = 3
+
         @ColorInt
         const val PROGRESS_BAR_COLOR = 0xFFe16e68
     }
 
-    private val data = listOf(
-        Question(
-            0b10,
-            1, 3
-        ),
-        Question(
-            0b110,
-            3, 9
-        ),
-        Question(
-            0b1001,
-            5, 11
-        ),
-        Question(
-            0b1011,
-            17, 15
-        ),
-        Question(
-            0b10101,
-            11, 19
-        ),
-        Question(
-            0b11001,
-            23, 21
-        ),
-        Question(
-            0b100101,
-            43, 53
-        ),
-        Question(
-            0b100100,
-            34, 32
-        )
-    )
-
     private var currentQuestion = 0
 
     private var correctAnswerIndex = 0
+
+    var wrongAnswers = 10
+
+    private lateinit var data: List<Question>
+
+    private lateinit var difficulty: Difficulty
+
+    private var timePerQuestion: Long = 10000
 
     private lateinit var questionTextView: TextView
     private lateinit var buttonFirst: ImageButton
@@ -71,7 +47,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
+        colorStatusBar(R.color.teal)
         setContentView(R.layout.screen_quiz)
+
+        difficulty =
+            intent.getSerializableExtra(DIFFICULTY_BUNDLE_KEY) as? Difficulty ?: Difficulty.JUNIOR
+        data = when (difficulty) {
+            Difficulty.JUNIOR -> juniorData
+            Difficulty.MEDIOR -> mediorData
+            Difficulty.SENIOR -> seniorData
+        }
+        timePerQuestion = when (difficulty) {
+            Difficulty.JUNIOR -> 10000
+            Difficulty.MEDIOR -> 9000
+            Difficulty.SENIOR -> 7000
+        }
 
         questionTextView = findViewById(R.id.question)
         buttonFirst = findViewById(R.id.buttonFirst)
@@ -107,16 +100,20 @@ class MainActivity : AppCompatActivity() {
     private fun gameOver() {
         cancelProgressBar()
         disableButtons()
-        startActivity(Intent(this@MainActivity, PointsActivity::class.java))
+        startActivity(
+            Intent(this@MainActivity, PointsActivity::class.java).apply {
+                putExtra(PointsActivity.POINTS_BUNDLE_KEY, wrongAnswers)
+            }
+        )
+        finish()
     }
 
     private fun onAnswerSelected(index: Int): View.OnClickListener = View.OnClickListener {
         it.isSelected = true
-        if (isCorrectAnswer(index)) {
-            nextQuestion()
-        } else {
+        if (!isCorrectAnswer(index)) {
             onWrongAnswer()
         }
+        nextQuestion()
     }
 
     private fun disableButtons() {
@@ -132,7 +129,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onWrongAnswer() {
-        gameOver()
+        wrongAnswers += 10
     }
 
     private fun cancelProgressBar() {
@@ -199,13 +196,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-data class Question(
-    val binaryNumber: Int,
-    val answer2: Int,
-    val answer3: Int,
-) {
-    val correctAnswer = Integer.parseInt(binaryNumber.toString(2), 2)
-
-    val answers
-        get() = listOf(correctAnswer, answer2, answer3)
+enum class Difficulty {
+    JUNIOR, MEDIOR, SENIOR
 }
