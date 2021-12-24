@@ -5,6 +5,12 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Bundle
+import android.view.View
+import android.widget.ImageButton
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -12,7 +18,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class JuniorActivity : AppCompatActivity() {
 
     companion object {
         const val NUMBER_OF_ANSWERS = 3
@@ -107,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     private fun gameOver() {
         cancelProgressBar()
         disableButtons()
-        startActivity(Intent(this@MainActivity, PointsActivity::class.java))
+        startActivity(Intent(this@JuniorActivity, PointsActivity::class.java))
     }
 
     private fun onAnswerSelected(index: Int): View.OnClickListener = View.OnClickListener {
@@ -197,15 +203,4 @@ class MainActivity : AppCompatActivity() {
         2 -> textThird
         else -> throw IllegalArgumentException("i = $index")
     }
-}
-
-data class Question(
-    val binaryNumber: Int,
-    val answer2: Int,
-    val answer3: Int,
-) {
-    val correctAnswer = Integer.parseInt(binaryNumber.toString(2), 2)
-
-    val answers
-        get() = listOf(correctAnswer, answer2, answer3)
 }
