@@ -16,7 +16,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
+        colorStatusBar()
         setContentView(R.layout.new_activity)
 
         buttonJunior = findViewById(R.id.playBtn)

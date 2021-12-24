@@ -12,6 +12,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatActivity
 
+
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
+        colorStatusBar(R.color.teal)
         setContentView(R.layout.screen_quiz)
 
         difficulty =

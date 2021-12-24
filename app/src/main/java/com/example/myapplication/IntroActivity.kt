@@ -1,13 +1,11 @@
 package com.example.myapplication
 
 import android.content.Intent
-import android.graphics.Color
 import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.VideoView
@@ -21,13 +19,7 @@ class IntroActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-        requestWindowFeature(1)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        window.statusBarColor = Color.TRANSPARENT
+        colorStatusBar()
         setContentView(R.layout.activity_intro)
         val button = findViewById<Button>(R.id.buttonIntro)
         val videoView = findViewById<VideoView>(R.id.videoView)

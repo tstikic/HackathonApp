@@ -16,7 +16,7 @@ class PointsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
+        colorStatusBar(R.color.teal)
         setContentView(R.layout.screen_quiz_finished)
 
         val buttonHome = findViewById<ImageButton>(R.id.returnHome)

@@ -12,6 +12,7 @@ class SplashScreenActivity : AppCompatActivity() {
     lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        colorStatusBar()
         setContentView(R.layout.splash_screen)
         val imgView = findViewById<ImageView>(R.id.logo)
 
