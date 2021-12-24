@@ -130,7 +130,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_height="20dp"
-        android:background="#ffffff"/>
-
+        android:background="@android:color/transparent"/>
 
 </LinearLayout>

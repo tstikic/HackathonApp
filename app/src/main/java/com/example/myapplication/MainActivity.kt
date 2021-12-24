@@ -1,28 +1,23 @@
 package com.example.myapplication
 
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.animation.Animator
-
 import android.animation.AnimatorListenerAdapter
-
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.widget.ImageButton
+import android.os.Bundle
+import android.view.View
+import android.widget.*
+import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
-
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
         const val NUMBER_OF_ANSWERS = 3
+        @ColorInt
+        const val PROGRESS_BAR_COLOR = 0xFFe16e68
     }
 
     private val data = listOf(
@@ -87,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         textThird = findViewById(R.id.answer3)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
-        progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
+        progressBar.progressTintList = ColorStateList.valueOf(PROGRESS_BAR_COLOR.toInt())
 
         animator = ValueAnimator.ofInt(0, progressBar.max)
         animator.duration = 10000
@@ -98,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 if (!buttonFirst.isSelected && !buttonSecond.isSelected && !buttonThird.isSelected) {
-                    gameOver()
+                    nextQuestion()
                 }
             }
         })
@@ -116,6 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onAnswerSelected(index: Int): View.OnClickListener = View.OnClickListener {
+        it.isSelected = true
         if (isCorrectAnswer(index)) {
             nextQuestion()
         } else {
@@ -148,6 +144,8 @@ class MainActivity : AppCompatActivity() {
     private fun nextQuestion() {
         if (++currentQuestion < data.size) {
             newQuestion()
+        } else {
+            gameOver()
         }
     }
 
@@ -159,22 +157,31 @@ class MainActivity : AppCompatActivity() {
         val shuffledAnswers = question.answers.shuffled()
         correctAnswerIndex = shuffledAnswers.indexOf(question.correctAnswer)
 
-        questionTextView.text = question.binaryNumber.toString(2)
+        fadeInText(questionTextView, question.binaryNumber.toString(2))
 
         for (i in 0 until NUMBER_OF_ANSWERS) {
             with(getButton(i)) {
-                getTextView(i).text = shuffledAnswers[i].toString()
+                fadeInText(getTextView(i), shuffledAnswers[i].toString())
                 backgroundTintList = if (i == correctAnswerIndex) {
                     context.getColorStateList(R.color.btn_correct_state)
                 } else {
                     context.getColorStateList(R.color.btn_wrong_state)
                 }
+                isSelected = false
             }
         }
 
         enableButtons()
 
         animator.start()
+    }
+
+    private fun fadeInText(textView: TextView, newText: String) {
+        if (currentQuestion == 0) {
+            textView.text = newText
+        } else {
+            textView.setTextAnimation(newText)
+        }
     }
 
     private fun getButton(@IntRange(from = 0, to = 2) index: Int) = when (index) {
