@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.MainActivity.Companion.DIFFICULTY_BUNDLE_KEY
 
 class HomeActivity : AppCompatActivity() {
 
@@ -13,6 +14,9 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
         setContentView(R.layout.new_activity)
 
         buttonJunior = findViewById(R.id.playBtn)
@@ -20,21 +24,23 @@ class HomeActivity : AppCompatActivity() {
         buttonSenior = findViewById(R.id.playBtnSenior)
 
         buttonJunior.setOnClickListener{
-            val intent = Intent(this, JuniorActivity::class.java)
-            startActivity(intent)
-            finish()
+            startMainActivity(Difficulty.JUNIOR)
         }
 
         buttonMedior.setOnClickListener{
-            val intent = Intent(this, MediorActivity::class.java)
-            startActivity(intent)
-            finish()
+            startMainActivity(Difficulty.MEDIOR)
         }
 
         buttonSenior.setOnClickListener{
-            val intent = Intent(this, SeniorActivity::class.java)
-            startActivity(intent)
-            finish()
+            startMainActivity(Difficulty.SENIOR)
         }
+    }
+
+    fun startMainActivity(difficulty: Difficulty) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra(DIFFICULTY_BUNDLE_KEY, difficulty)
+        }
+        startActivity(intent)
+        finish()
     }
 }
